@@ -1,0 +1,36 @@
+.wrapper {
+    background-color: var(--secondary-color);
+    border-radius: 20px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 2em;
+}
+
+.generator {
+    height: 30vh;
+    width: 30vw;    
+    margin: 5vh 0;
+}
+
+.generator h2 {
+    margin: 0;
+    border-bottom: 2px solid var(--accent-color);
+    line-height: 2em;
+}
+
+.optionsWrapper {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto auto;
+}
+
+.variantsWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 0 auto;
+}
+
+hr {
+    border: 1px dashed var(--accent-color);
+    opacity: 0.5;
+}

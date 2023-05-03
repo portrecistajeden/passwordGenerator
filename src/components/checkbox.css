@@ -1,0 +1,81 @@
+.checkboxWrapper {
+    position: relative;
+    display: block;
+    text-indent: -1px;
+    margin: 1em 0;
+    font-size: 1.2em;
+    padding-left: 40px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.checkboxWrapper input {
+    height: 0;
+    width: 0;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 26px;
+    width: 26px;
+    background-color: var(--main-color);
+    border-radius: 3px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.5s;
+}
+
+.checkmark::after { 
+    opacity: 0;             
+    content: '';
+    height: 22px;
+    width: 22px;
+    background-color: var(--main-color);
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: 0.5s;
+    clip-path: polygon(40% 70%, 19% 43%, 4% 66%, 44% 98%, 97% 20%, 79% 3%);
+
+}
+
+
+
+.enabled:hover input ~ .checkmark{
+    animation: checkmarkPop 0.3s;
+}
+
+.checkboxWrapper input:checked ~ .checkmark{
+    background-color: var(--accent-color);
+}
+
+.checkboxWrapper input:checked ~ .checkmark::after{
+    opacity: 1;    
+    background-color: var(--tetrary-color);
+}
+
+.disabled {
+    color: gray;
+    cursor:default;   
+}
+
+.disabledCheckmark {
+    background-color: gray;
+}
+
+@keyframes checkmarkPop {
+    50% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,65 @@
+.radioWrapper {
+    position: relative;
+    display: block;
+    text-indent: -1px;
+    margin: 0.5em 0;
+    font-size: 1.2em;
+    padding-left: 10px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.radioInput {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+}
+
+.radiomark {
+    left: -8px;
+    top: 6px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--accent-color);
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+}
+
+.radioText {
+    margin-left: 0.5em;
+}
+
+.radiomark::after {    
+  content: '';
+  width: 14px;
+  height: 14px;
+  background: var(--accent-color);
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.radioInput {
+    visibility: hidden;
+}
+
+.radioInput:checked + span:after {
+    opacity: 1;
+}
+
+.radioInput:hover ~ span{
+    animation: checkmarkPop 0.3s;
+}
