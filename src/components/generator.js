@@ -8,34 +8,36 @@ import Result from './result';
 
 export default function Generator() {
 
+    let optionsChecked = 0;
+
     const [password, setPassword] = useState('');
     const [uppercase, setUppercase] = useState(true);
     const [lowercase, setLowercase] = useState(true);
     const [numbers, setNumbers] = useState(true);
     const [symbols, setSymbols] = useState(true);
-    const [easyToSay, setEasyToSay] = useState(false);
+    const [onlyLetters, setOnlyLetters] = useState(false);
     const [easyToRead, setEasyToRead] = useState(false);
     const [allCharacters, setAllCharacters] = useState(true);
     const [pswdLength, setPswdLength] = useState('8');
 
     const onChangeVariant = (elem) => {
         const { name } = elem.target;
-        if (name === 'easyToSay') {
-          setEasyToSay(true);
+        if (name === 'onlyLetters') {
+          setOnlyLetters(true);
           setEasyToRead(false);
           setAllCharacters(false);
           setNumbers(false);
           setSymbols(false);
         }
         else if (name === 'easyToRead') {
-            setEasyToSay(false);
+            setOnlyLetters(false);
             setEasyToRead(true);
             setAllCharacters(false);
             setNumbers(false);
             setSymbols(false);
         }
         else {
-            setEasyToSay(false);
+            setOnlyLetters(false);
             setEasyToRead(false);
             setAllCharacters(true);
             setNumbers(true);
@@ -44,27 +46,34 @@ export default function Generator() {
     }
 
     const generatePswd = () => {
-        if(easyToSay) {
-            setPassword(generatePassword(pswdLength, 'easyToSay'));
+        if(onlyLetters) {
+            setPassword(generatePassword(pswdLength, 'onlyLetters', lowercase, uppercase, symbols, numbers));
         }
         else if(easyToRead) {
-            setPassword(generatePassword(pswdLength, 'easyToRead'));
+            setPassword(generatePassword(pswdLength, 'easyToRead', lowercase, uppercase, symbols, numbers));
         }
         else {
-            setPassword(generatePassword(pswdLength, 'allCharacters'));
+            setPassword(generatePassword(pswdLength, 'allCharacters', lowercase, uppercase, symbols, numbers));
         }
     }
 
+
     useEffect(() => {
         generatePswd();
-    },[uppercase,lowercase,numbers,symbols,easyToSay,easyToRead,allCharacters,pswdLength])
+
+        optionsChecked = 0;
+        for(let option of [uppercase,lowercase,numbers,symbols]){
+            if(option) optionsChecked +=1;
+        }
+        console.log(optionsChecked)
+    },[uppercase,lowercase,numbers,symbols,onlyLetters,easyToRead,allCharacters,pswdLength])
     
 
     return(
         <div className='wrapper generator'>
             <h2>Your password options</h2>
             <div className='variantsWrapper'>
-                <Radio label='Easy to say' checked={easyToSay} onChange={onChangeVariant} id='easyToSay'/>
+                <Radio label='Only letters' checked={onlyLetters} onChange={onChangeVariant} id='onlyLetters'/>
                 <Radio label='Easy to read' checked={easyToRead} onChange={onChangeVariant} id='easyToRead'/>
                 <Radio label='All characters' checked={allCharacters} onChange={onChangeVariant} id='allCharacters'/>
             </div>
@@ -72,8 +81,8 @@ export default function Generator() {
             <div className='optionsWrapper'>
                 <Checkbox label='Uppercase' isChecked={uppercase} setChecked={setUppercase}/>
                 <Checkbox label='Lowercase' isChecked={lowercase} setChecked={setLowercase}/>
-                <Checkbox label='Numbers' isChecked={numbers} setChecked={setNumbers} disabled={easyToSay}/>
-                <Checkbox label='Symbols' isChecked={symbols} setChecked={setSymbols} disabled={easyToSay}/>
+                <Checkbox label='Numbers' isChecked={numbers} setChecked={setNumbers} disabled={onlyLetters}/>
+                <Checkbox label='Symbols' isChecked={symbols} setChecked={setSymbols} disabled={onlyLetters}/>
             </div>
             <hr/>
             <Slider value={pswdLength} setValue={setPswdLength} />  

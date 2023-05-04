@@ -1,24 +1,32 @@
-export const generatePassword = (pswdLength, variant) => {
-    const charsetAll = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^*()_+-=/?';
-    const charsetRead = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$%^*()_+-=/?';
-    const charsetSay = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+export const generatePassword = (pswdLength, variant, lowercase, uppercase, symbols, numbers) => {
+    const symbolsCharset = '!@#$%^*()_+-=/?';
+    const numbersCharset = '0123456789';
+    const numbersEasyCharset = '23456789';
+    const uppercaseCharset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const uppercaseEasyCharset = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+    const lowercaseCharset = 'abcdefghijklmnopqrstuvwxyz';
+    const lowercaseEasyCharset = 'abcdefghijkmnpqrstuvwxyz';
+
     let result = '';
     let charset = ''
-
-    switch(variant) {
-        case 'easyToSay':
-            charset = charsetSay;
-            break;
-        case 'easyToRead':
-            charset = charsetRead;
-            break;
-        case 'allCharacters':
-            charset = charsetAll;
-            break;
-        default:
-            charset = '';
+    
+    if(variant ==='onlyLetters'){            
+        charset += lowercase ? lowercaseCharset : '';
+        charset += uppercase ? uppercaseCharset : '';
     }
-
+    else if (variant === 'allCharacters') {
+        charset += lowercase ? lowercaseCharset : '';
+        charset += uppercase ? uppercaseCharset : '';
+        charset += symbols ? symbolsCharset : '';
+        charset += numbers ? numbersCharset : '';
+    }
+    else{
+        charset += lowercase ? lowercaseEasyCharset : '';
+        charset += uppercase ? uppercaseEasyCharset : '';
+        charset += symbols ? symbolsCharset : '';
+        charset += numbers ? numbersEasyCharset : '';
+    }
+    
     for(let i=0, n = charset.length; i<pswdLength; i++){
         result += charset.charAt(Math.floor(Math.random() * n));
     }
