@@ -1,4 +1,70 @@
 .result {
-    height: 10vh;
-    width: 30vw;
+    position: relative;
+    display: block;
+    text-align: center;
+}
+
+.textfield {
+    width: calc(100% - 130px);
+    height: 3rem;
+    border: none;
+    border-radius: 1.5rem;
+    background-color: var(--main-color);
+    font-size: 2em;
+    padding-left: 20px;
+    padding-right: 110px;
+    color: var(--tetrary-color);
+    outline: none;
+}
+
+
+.buttonsWrapper {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+}
+
+.button {
+    font-size: 2em;
+    color: var(--secondary-color);
+    border: 0;
+    padding: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.button:hover {
+    animation: checkmarkPop 0.5s;
+    color: var(--secondary-color-dark);
+}
+
+.copiedMessage {
+    display: inline-block;
+    font-size: 1.5em;
+    margin-top: 0.5em;
+    opacity: 0;
+}
+
+.visible {
+    animation: showCopiedMessage 1.5s ease-in-out;
+}
+
+@keyframes showCopiedMessage {
+    0% {
+        transform: translateY(1em);
+        opacity: 0;
+    }
+    20% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    40% {
+        transform: translateY(0);        
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(3em);
+    }
 }
