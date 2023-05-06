@@ -8,8 +8,7 @@ import Result from './result';
 
 export default function Generator() {
 
-    let optionsChecked = 0;
-
+    const [preventUncheck, setPreventUncheck] = useState(false);
     const [password, setPassword] = useState('');
     const [uppercase, setUppercase] = useState(true);
     const [lowercase, setLowercase] = useState(true);
@@ -23,23 +22,25 @@ export default function Generator() {
     const onChangeVariant = (elem) => {
         const { name } = elem.target;
         if (name === 'onlyLetters') {
-          setOnlyLetters(true);
-          setEasyToRead(false);
-          setAllCharacters(false);
-          setNumbers(false);
-          setSymbols(false);
+            setUppercase(true); 
+            setLowercase(true);
+            setOnlyLetters(true);
+            setEasyToRead(false);
+            setAllCharacters(false);
+            setNumbers(false);
+            setSymbols(false);
         }
         else if (name === 'easyToRead') {
             setOnlyLetters(false);
             setEasyToRead(true);
             setAllCharacters(false);
-            setNumbers(false);
-            setSymbols(false);
         }
         else {
             setOnlyLetters(false);
             setEasyToRead(false);
             setAllCharacters(true);
+            setNumbers(true);
+            setSymbols(true);
             setNumbers(true);
             setSymbols(true);
         }
@@ -61,11 +62,16 @@ export default function Generator() {
     useEffect(() => {
         generatePswd();
 
-        optionsChecked = 0;
+        let optionsChecked = 0;
         for(let option of [uppercase,lowercase,numbers,symbols]){
             if(option) optionsChecked +=1;
         }
-        console.log(optionsChecked)
+        if(optionsChecked===1) {
+            setPreventUncheck(true);
+        }
+        else {
+            setPreventUncheck(false);
+        }
     },[uppercase,lowercase,numbers,symbols,onlyLetters,easyToRead,allCharacters,pswdLength])
     
 
@@ -79,10 +85,10 @@ export default function Generator() {
             </div>
             <hr/>
             <div className='optionsWrapper'>
-                <Checkbox label='Uppercase' isChecked={uppercase} setChecked={setUppercase}/>
-                <Checkbox label='Lowercase' isChecked={lowercase} setChecked={setLowercase}/>
-                <Checkbox label='Numbers' isChecked={numbers} setChecked={setNumbers} disabled={onlyLetters}/>
-                <Checkbox label='Symbols' isChecked={symbols} setChecked={setSymbols} disabled={onlyLetters}/>
+                <Checkbox label='Uppercase' isChecked={uppercase} setChecked={setUppercase} preventUncheck={preventUncheck}/>
+                <Checkbox label='Lowercase' isChecked={lowercase} setChecked={setLowercase} preventUncheck={preventUncheck}/>
+                <Checkbox label='Numbers' isChecked={numbers} setChecked={setNumbers} preventUncheck={preventUncheck} disabled={onlyLetters}/>
+                <Checkbox label='Symbols' isChecked={symbols} setChecked={setSymbols} preventUncheck={preventUncheck} disabled={onlyLetters}/>
             </div>
             <hr/>
             <Slider value={pswdLength} setValue={setPswdLength} />  

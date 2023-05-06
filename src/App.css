@@ -8,5 +8,6 @@
 .title {
     letter-spacing: 0.1em;
     font-size: 2.5em;
-    color: var(--tetrary-color)
+    color: var(--tetrary-color);
+    text-align: center;
 }
